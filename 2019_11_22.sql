@@ -194,12 +194,12 @@ WHERE rn BETWEEN 11 AND 14;
 --row 3
 --emp 테이블에서 ename으로 정렬한 결과에 11~14번째행 조회하는 쿼리를 작석하세요
 
-SELECT *
+SELECT rn, empno, ename
 FROM
-    (SELECT ROWNUM rn, a.*
-FROM
-    (SELECT empno, ename
-     FROM emp  ORDER BY  ename)a)
-    WHERE rn BETWEEN 11 AND 14;
+(SELECT ROWNUM rn, a.*
+FROM (SELECT empno, ename
+From emp
+ORDER BY ename) a)
+WHERE rn  BETWEEN 11 AND 14;
 
 

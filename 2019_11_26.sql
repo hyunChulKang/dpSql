@@ -192,3 +192,37 @@ SELECT empno, ename, job, sal,
                                 sal) bonus
 
 FROM emp;
+commit;
+----------------------------------------------2019_11_26 과제------------------------------------------------------
+--cond1
+
+
+
+
+
+--cond2
+-- emp 테이블을 이용하여 hiredate에 따라 올해 건강보험 검진 대상자인지 조회하는 쿼리를 작성하세요.
+--(생년을 기준으로 하나 여기서는 입사년도를 기준으로 한다.)
+
+SELECT empno, ename, hiredate,
+    CASE
+        WHEN MOD(TO_CHAR(hiredate, 'YYYY'),2) =MOD(TO_CHAR(SYSDATE, 'YYYY'), 2) THEN '건강검진 대상자'
+        ELSE '건강검진 비대상자'
+    END
+FROM emp;
+
+
+
+
+
+
+SELECT
+    CASE
+            WHEN TO_CHAR(SYSDATE, 'YYYY') = '2013' THEN SYSDATE
+
+            WHEN TO_CHAR(SYSDATE, 'MM') = '11' THEN SYSDATE + 1 
+
+             ELSE NULL END SYS_DATE 
+
+FROM DUAL;
+

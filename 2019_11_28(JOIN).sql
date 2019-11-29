@@ -183,6 +183,12 @@ AND e.sal > 2500
 AND e.empno >7600
 ORDER BY e.deptno;
 
+
+SELECT empno, ename, sal, e.deptno, dname
+FROM emp e, dept d
+WHERE e.deptno = d.deptno
+AND e.sal >2500
+AND e.empno >7600;
 --join04
 
 SELECT e.empno, e.ename,e.sal, e.deptno, d.dname
@@ -195,19 +201,72 @@ ORDER BY e.deptno;
 
 --join1
 
-SELECT prod_lgu, lprod_nm, prod_id, prod_name
-FROM prod, lprod;
+SELECT lprod_gu, lprod_nm, prod_id, prod_name
+FROM prod p, lprod l
+WHERE p.prod_lgu = l.lprod_gu;
 
 --join2
-SELECT buyer_id, buyer_name, p.prod_id, prod_name 
+SELECT buyer_id, b.buyer_name, p.prod_id, p.prod_name
 FROM prod p, buyer b
-WHERE p.prod_lgu = b.buyer_lgu
-ORDER BY buyer_id, prod_id;
+WHERE p.prod_buyer = b.buyer_id
+ORDER BY b.buyer_id;
 
 SELECT*
 FROM buyer;
 
 SELECT*
 FROM prod;
+--join3
 
-commit;
+SELECT mem_id, mem_name, prod_id, prod_name, cart_qty
+FROM member, cart, prod
+WHERE mem_id = cart_member
+AND cart_prod = prod_id;
+
+--join4
+
+SELECT cs.cid, cnm, pid, day, cnt
+FROM customer cs, cycle cy
+WHERE cs.cid = cy.cid
+AND (CNM = 'brown' 
+OR CNM = 'sally');
+
+--join5
+
+SELECT cy.cid, cs.cnm, cy.pid, pr.pnm, cy.cnt
+FROM customer cs, cycle cy, product pr
+WHERE cs.cid = cy.cid
+AND cy.pid = pr.pid
+AND (CNM = 'brown' 
+OR CNM = 'sally');
+
+--join6
+--SELECT cy.cid, cs.cnm, cy.pid, pr.pnm, cy.cnt
+SELECT   cy.cid , cs.cnm,cy.pid, pr.pnm , sum(cy.cnt) cnt
+FROM customer cs, cycle cy, product pr
+WHERE cs.cid = cy.cid
+AND cy.pid = pr.pid
+GROUP BY cy.pid, cy.cid, cs.cnm, pr.pnm;
+
+--join7
+
+SELECT cy.pid, pr.pnm, sum(cy.cnt) cnt
+FROM customer cs, cycle cy, product pr
+WHERE cs.cid = cy.cid
+AND cy.pid = pr.pid
+GROUP BY cy.pid, pr.pnm
+ORDER BY cy.pid;
+
+
+
+SELECT *
+FROM customer;
+
+SELECT *
+FROM cycle;
+
+SELECT *
+FROM product;
+
+SELECT *
+FROM HR;

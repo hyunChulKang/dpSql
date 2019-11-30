@@ -269,4 +269,53 @@ SELECT *
 FROM product;
 
 SELECT *
-FROM HR;
+FROM regions;
+
+
+SELECT *
+FROM countries;
+
+
+SELECT *
+FROM locations;
+
+SELECT *
+FROM departments;
+
+SELECT *
+FROM employees;
+
+select 
+        CONCAT(first_name, last_name) fullname
+FROM employees;
+
+
+-- join8
+SELECT co.region_id, re.region_name, co.country_name
+FROM  countries co, regions re
+WHERE  co.region_id = re.region_id
+AND re.region_name = 'Europe';
+
+
+-- join9
+SELECT co.region_id, re.region_name, co.country_name, lo.city
+FROM  countries co, regions re, locations lo
+WHERE  co.region_id = re.region_id
+AND co.country_id = lo.country_id
+AND re.region_name = 'Europe';
+
+--join10
+
+
+
+
+--join11
+
+SELECT co.region_id, re.region_name, co.country_name,
+       lo.city, de.department_name, CONCAT(first_name, last_name) name
+FROM  countries co, regions re, locations lo, departments de, employees em
+WHERE  co.region_id = re.region_id
+AND co.country_id = lo.country_id
+AND lo.location_id = de.location_id
+AND de.department_id = em.department_id
+AND re.region_name = 'Europe';

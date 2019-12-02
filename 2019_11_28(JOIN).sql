@@ -298,6 +298,8 @@ AND re.region_name = 'Europe';
 
 
 -- join9
+--(row 9 - France, Denmark, Belgium 3개 국가에 속한 locationts 정보는 미존재
+--나머지 5개중에 다수의 location 정보를 갖고 있는 국가가 존재한다.)
 SELECT co.region_id, re.region_name, co.country_name, lo.city
 FROM  countries co, regions re, locations lo
 WHERE  co.region_id = re.region_id
@@ -306,7 +308,12 @@ AND re.region_name = 'Europe';
 
 --join10
 
-
+SELECT co.region_id, re.region_name, co.country_name, lo.city , department_name
+FROM  countries co, regions re, locations lo, departments de
+WHERE  co.region_id = re.region_id
+AND co.country_id = lo.country_id
+AND lo.location_id = de.location_id
+AND re.region_name = 'Europe';
 
 
 --join11
@@ -319,3 +326,18 @@ AND co.country_id = lo.country_id
 AND lo.location_id = de.location_id
 AND de.department_id = em.department_id
 AND re.region_name = 'Europe';
+
+
+--join12
+select em.employee_id, CONCAT(em.first_name,em.last_name) name,
+       em.job_id, jo.job_title
+FROM employees em, jobs jo
+WHERE em.job_id = jo.job_id;
+
+
+--join13
+
+select em.manager_id mng_id ,CONCAT(em2.first_name,em2.last_name) mgr_name, em.employee_id , CONCAT(em.first_name,em.last_name) name,jo.job_id, jo.job_title
+FROM employees em, jobs jo, employees em2
+WHERE em.job_id = jo.job_id
+AND em.MANAGER_ID = em2.EMPLOYEE_ID;

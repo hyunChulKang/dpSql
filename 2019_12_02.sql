@@ -111,11 +111,33 @@ AND p.prod_id = b.buy_prod);
 
 --outerjoin2
 
-SELECT b.buy_date, b.buy_prod, p.prod_id, p.prod_name, b.buy_qty
+SELECT NVL(b.buy_date, '05/01/25') buy_date , b.buy_prod, p.prod_id, p.prod_name, b.buy_qty
 FROM buyprod b , prod p
 WHERE b.buy_date(+) = TO_DATE('20050125', 'YYYYMMDD')
 AND p.prod_id = b.buy_prod(+);
 
+
+--outerjoin3
+
+SELECT NVL(b.buy_date, '05/01/25') buy_date , b.buy_prod, p.prod_id, p.prod_name, NVL(b.buy_qty, '0')
+FROM buyprod b , prod p
+WHERE b.buy_date(+) = TO_DATE('20050125', 'YYYYMMDD')
+AND p.prod_id = b.buy_prod(+);
+
+
+--outerjoin4
+
+SELECT pr.pid, pr.pnm, NVL(cy.cid,'1') cid, NVL(cy.day,'0') day, NVL(cy.cnt,'0') cnt 
+FROM cycle cy, product pr
+WHERE cy.pid(+) = pr.pid
+AND cy.cid(+) = '1';
+
+--outerjoin5
+SELECT pr.pid, pr.pnm, cy.cid--, cu.cnm, cy.day, cy.cnt
+FROM cycle cy, product pr--, customer cu
+WHERE cy.pid = pr.pid
+--AND cy.cid = cu.cid
+AND cy.cid = '1';
 
 
 
@@ -123,5 +145,18 @@ SELECT buy_date
 FROM buyprod b, p;
 
 SELECT *
-FROM buyprod;
+FROM product;
+
+SELECT *
+FROM cycle;
+
+SELECT *
+FROM customer;
+
+
+
+
+
+
+
 

@@ -64,6 +64,8 @@ FROM customer CROSS JOIN product;
 -- 1  / 서울특별시 /서초구 / 7.5
 -- 2  / 서울특별시 / 서초구 / 7.2
 --해당 시도, 시군구별 프렌차이즈별 건수가 필요
+
+
 SELECT ROWNUM rn, sido, sigungu, 도시발전지수
 FROM
 (SELECT a.sido, a.sigungu, ROUND(a.cnt/b.cnt, 1) as 도시발전지수
@@ -80,6 +82,18 @@ WHERE a.sido = b.sido
 AND a.sigungu = b.sigungu
 ORDER BY 도시발전지수 DESC);
 
+SELECT a.sido, a.sigungu, ROUND(a.cnt/b.cnt, 1) as 도시발전지수
+FROM
+(SELECT gb, sido,sigungu,count(*) cnt
+FROM fastfood
+WHERE  GB = '롯데리아'
+GROUP BY gb, sido,sigungu)a,
+
+(SELECT sido,sigungu,count(*) cnt
+FROM fastfood
+WHERE  GB IN ('맥도날드','KFC','버거킹')
+GROUP BY sido, sigungu)b
+WHERE a.sido = b.sido;
 
 ----------------------------------------------------
 SELECT GB,SIDO,sigungu, COUNT(GB) cnt
@@ -103,7 +117,7 @@ FROM
     FROM fastfood f1
         WHERE GB IN('롯데리아','맥도날드')
         GROUP BY GB, SIDO,sigungu
-        ORDER BY  cnt DESC)a;
+        ORDER BY  cnt DESC)B;
 --  00 도의 00시에 롯데리아가 00개면, 00도의 00시의 맥도날드와 KFC를 더한 것을 나눈다.
 ---------------------------------------------------------
 --하나의 SQL로 작성하지마시오

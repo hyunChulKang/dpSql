@@ -102,6 +102,7 @@ WHERE SIDO = '´ëÀü±¤¿ª½Ã'
 AND sigungu = '´ë´ö±¸'
 AND GB = '·Ôµ¥¸®¾Æ'
 GROUP BY GB,SIDO,sigungu;
+
 SELECT
 FROM
     (SELECT GB,SIDO,sigungu, COUNT(GB) cnt

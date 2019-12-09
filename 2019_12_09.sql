@@ -383,3 +383,19 @@ DESC emp_test;
 --ALTER TABLE 테이블명 DROP COLUMN 컬럼;
 
 ALTER TABLE emp_test DROP (hp_n);
+
+--제약 조건 추가
+--ALTER TABLE 테이블명  ADD   --테이블 레벨 제약조건 스크립트
+--emp_test테이블의 empno컬럼을 PK 제약조건 추가
+
+ALTER TABLE emp_test ADD CONSTRAINT pk_emp_test
+                         PRIMARY KEY (empno);
+                         
+--제약 조건 삭제
+--ALTER TABLE 테이블명 DROP CONSTRAINT 제약조건이름;
+--emp_test 테이블의 PRIMARY KEY 제약조건은 pk_emp_test 제약 삭제
+ALTER TABLE emp_test DROP CONSTRAINT pk_emp_test;
+DESC emp_test;
+
+--테이블 컬럼, 타입 변경은 제한적으로나마 가능
+--테이블의 컬럼순서를 변경한느 것은 불가능하다.

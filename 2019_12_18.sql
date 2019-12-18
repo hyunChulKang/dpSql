@@ -162,12 +162,22 @@ insert into board_test values (10, 4, '열번째 글은 네번째 글의 답글입니다');
 insert into board_test values (11, 10, '열한번째 글은 열번째 글의 답글입니다');
 commit;
 
-SELECT *
+SELECT seq, parent_seq,title
+FROM board_test;
+
+SELECT seq, NVL(parent_seq,seq) parent_seq,title
 FROM board_test;
 
 --SIBLINGS 계층쿼리 정렬방법(게시판댓글)
-SELECT SEQ, LPAD(' ', 4*(LEVEL-1)) || title
+
+SELECT seq,LPAD(' ', 4*(LEVEL-1)) || title ti,LEVEL
 FROM board_test
-START WITH  parent_seq IS null 
-CONNECT BY PRIOR seq =  parent_seq
-ORDER SIBLINGS BY SEQ DESC;
+START WITH  parent_seq  IS NULL 
+CONNECT BY  PRIOR seq =  parent_seq
+ORDER SIBLINGS BY NVL(parent_seq,seq) DESC;
+
+SELECT seq,  LPAD(' ', 4*(LEVEL-1)) || title ti,LEVEL
+FROM board_test
+START WITH  parent_seq  IS NULL 
+CONNECT BY  PRIOR seq =  parent_seq
+ORDER BY CONNECT_BY_ROOT(seq)DEsc,SEQ;
